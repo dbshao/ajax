@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ajax验证</title>
+    <script type="text/javascript">
+        function getxhr() {
+            var xhr=null;
+            if(window.XMLHttpRequest){
+                xhr=new XMLHttpRequest();
+            }else{
+                xhr=new ActiveXObject("Microsoft.XMLHttp");
+            }
+            return xhr;
+        }
+        
+        function sendAjaxRequest() {
+            var xhr=getxhr();
+            xhr.open("get","login.do",true);
+            xhr.onreadystatechange=function(){
+                if(xhr.readyState==4&&xhr.status==200){
+                    var msq=xhr.responseText;
+                    var msq_span=document.getElementById("msq-span");
+                    msq_span.innerHTML=msq;
+                }
+            };
+            xhr.send(null);
+            document.getElementById("msq_span").innerHTML="努力加载中……"
+        }
+    </script>
+</head>
+<body>
+    <input type="button" value="获取ajax对象" onclick="getxhr()">
+    <input type="button" value="发送ajax请求" onclick="sendAjaxRequest()">
+    <br><span id="msq_span"></span>
+    用户名：<input type="text" id="username" onblur="checkName()">
+            <span id="name_span"></span><br>
+    密码：<input type="password" id="password"><br>
+    <input type="button" value="注册">
+
+</body>
+</html>

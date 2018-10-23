@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>关联菜单</title>
+
+    <script type="text/javascript">
+        function getXhr() {
+            var xhr=null;
+            if(window.XMLHttpRequest){
+                xhr=new XMLHttpRequest();
+            }else{
+                xhr=new ActiveXObject("Microsoft.XMLHttp");
+            }
+            return xhr;
+        }
+
+        function $(id) {
+            return document.getElementById(id);
+        }
+        function $F(id) {
+            return $(id).value;
+        }
+        function getCity(v) {
+            var xhr=getXhr();
+            xhr.onreadystatechange=function () {
+                if(xhr.readyState==4&&xhr.status==200){
+                    var txt=xhr.responseText;
+                    var strs=txt.split(";");
+                    $("s2").innerHTML="";
+                    for(var i=0;i<strs.length;i++){
+                        var str1s=strs[i].split(",");
+                        var op=new Option(str1s[0],str1s[1]);
+                        $("s2").options[i]=op;
+                    }
+                }
+            };
+            xhr.open("get","list.do?name="+v,true);
+            xhr.send(null);
+        }
+
+    </script>
+</head>
+<body>
+    <select id="s1" style="width: 120px" onchange="getCity(this.value)">
+        <option >请选择</option>
+        <option value="bj">北京</option>
+        <option value="sh">上海</option>
+        <option value="gz">广州</option>
+    </select>
+
+    <select id="s2" style="width: 120px">
+
+    </select>
+
+</body>
+</html>
